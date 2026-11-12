@@ -78,27 +78,48 @@ export default function Homepage() {
  *   collection: FeaturedCollectionFragment;
  * }}
  */
+
 function FeaturedCollection({collection}) {
   if (!collection) return null;
-  const image = collection?.image;
+
   return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image
-            data={image}
-            sizes="100vw"
-            alt={image.altText || collection.title}
-          />
+    <section className="hero-section">
+      <div className="hero-image">
+        <img
+          src="/images/fashion-hero.jpg"
+          alt="Joona Fashion new collection"
+        />
+      </div>
+
+      <div className="hero-overlay">
+        <div className="hero-content">
+          <span className="hero-subtitle">
+            THE NEW COLLECTION
+          </span>
+
+          <h1>
+            Style That
+            <br />
+            Speaks For You.
+          </h1>
+
+          <p>
+            Discover timeless fashion, modern essentials
+            and styles made for every occasion.
+          </p>
+
+          <Link
+            to={`/collections/${collection.handle}`}
+            className="hero-button"
+          >
+            Explore Collection <span>→</span>
+          </Link>
         </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
+      </div>
+    </section>
   );
 }
+
 
 /**
  * @param {{
@@ -111,21 +132,32 @@ function RecommendedProducts({products}) {
       className="recommended-products"
       aria-labelledby="recommended-products"
     >
-      <h2 id="recommended-products">Recommended Products</h2>
-      <Suspense fallback={<div>Loading...</div>}>
+      <div className="section-heading">
+        <h2 id="recommended-products">
+          Discover Our Collection
+        </h2>
+
+        <p>
+          Explore our latest styles and everyday essentials.
+        </p>
+      </div>
+
+      <Suspense fallback={<div>Loading products...</div>}>
         <Await resolve={products}>
           {(response) => (
             <div className="recommended-products-grid">
               {response
                 ? response.products.nodes.map((product) => (
-                    <ProductItem key={product.id} product={product} />
+                    <ProductItem
+                      key={product.id}
+                      product={product}
+                    />
                   ))
                 : null}
             </div>
           )}
         </Await>
       </Suspense>
-      <br />
     </section>
   );
 }

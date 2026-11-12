@@ -1,6 +1,6 @@
 import {useLoaderData} from 'react-router';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
-
+import { Contacts } from '~/components/Contacts';
 /**
  * @type {Route.MetaFunction}
  */
@@ -64,7 +64,9 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {page} = useLoaderData();
-
+   if (page.handle === 'contact') {
+    return <Contacts />;
+  }
   return (
     <div className="page">
       <header>
